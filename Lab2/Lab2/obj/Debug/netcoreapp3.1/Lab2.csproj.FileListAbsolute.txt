@@ -1,0 +1,13 @@
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\obj\Debug\netcoreapp3.1\Lab2.csprojAssemblyReference.cache
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\obj\Debug\netcoreapp3.1\Lab2.AssemblyInfoInputs.cache
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\obj\Debug\netcoreapp3.1\Lab2.AssemblyInfo.cs
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\obj\Debug\netcoreapp3.1\Lab2.csproj.CoreCompileInputs.cache
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\bin\Debug\netcoreapp3.1\Lab2.exe
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\bin\Debug\netcoreapp3.1\Lab2.deps.json
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\bin\Debug\netcoreapp3.1\Lab2.runtimeconfig.json
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\bin\Debug\netcoreapp3.1\Lab2.runtimeconfig.dev.json
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\bin\Debug\netcoreapp3.1\Lab2.dll
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\bin\Debug\netcoreapp3.1\Lab2.pdb
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\obj\Debug\netcoreapp3.1\Lab2.dll
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\obj\Debug\netcoreapp3.1\Lab2.pdb
+C:\Users\MrSklif\source\repos\MrSkl1f\AnalysisOfAlgorithms\Lab2\Lab2\obj\Debug\netcoreapp3.1\Lab2.genruntimeconfig.cache
