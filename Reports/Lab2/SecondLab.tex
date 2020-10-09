@@ -63,7 +63,7 @@
 		\begin{center}
 			\vspace{3cm}
 			{\bf\huge Отчёт\par}
-			{\bf\Large по лабораторной работе № 1\par}
+			{\bf\Large по лабораторной работе № 2\par}
 			\vspace{0.5cm}
 		\end{center}
 		
@@ -176,20 +176,21 @@
 	\section{Трудоемкость алгоритмов}
 	Модель трудоемкости для оценки алгоритмов:
 	\begin{enumerate}
-		\item[1)] стоимость базовых операций 1:\par
-		$=,+,*,\simeq,<,>,\geq,\leq,==,!=,[],+=,-=,*=,/=,++,--$
+		\item[1)] стоимость базовых операций единица:\par
+		$=,+,*,\simeq,<,>,\geq,\leq,==,!=,[],+=,-=,*=,/=,++,--$;
 		\item[2)] стоимость цикла:\par
 		$f_{for}=f_{init}+f_{comp}+M(f_{body}+f_{increment}+f_{comp})$\par
 		Пример: $for(i=0,i<M;i++){/* body */}$\par
-		Результат: $2 + M(2+f_{body})$
+		Результат: $2 + M(2+f_{body})$;
 		\item[3)] стоимость условного оператора\par
 		Пусть goto (переход к одной из ветвей) стоит 0, тогда\par
 		\begin{displaymath}
 			f_{f} = \left\{ \begin{array}{l l}
-				max(f_{A},f_{B}), & \textrm{лучший случай}\\
+				min(f_{A},f_{B}), & \textrm{лучший случай}\\
 				max(f_{A},f_{B}), & \textrm{худший случай}\\
 			\end{array} \right.
 		\end{displaymath}
+		\item[4)] операция обращения к ячейки матрицы [i, j] имеет трудоёмкость равную двум.
 	\end{enumerate}
 	
 	\newpage
