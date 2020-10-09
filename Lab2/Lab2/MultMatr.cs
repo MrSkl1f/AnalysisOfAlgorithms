@@ -104,19 +104,19 @@ namespace Lab2
             Array mulH = new Array(n1);
             Array mulV = new Array(m2);
 
-            int smallerM = m1 - m1 % 2;
+            int smallerM = m1 % 2;
             for (int i = 0; i < n1; i++)
             {
-                for (int j = 0; j < (smallerM); j += 2)
+                for (int j = 0; j < (m1 - smallerM); j += 2)
                 {
                     mulH[i] -= matr1[i, j] * matr1[i, j + 1];
                 }
             }
 
-            int smallerN = n2 - n2 % 2;
+            int smallerN = n2 % 2;
             for (int i = 0; i < m2; i++)
             {
-                for (int j = 0; j < (smallerN); j += 2)
+                for (int j = 0; j < (n2 - smallerN); j += 2)
                 {
                     mulV[i] -= matr2[j, i] * matr2[j + 1, i];
                 }
@@ -127,7 +127,7 @@ namespace Lab2
                 for (int j = 0; j < m2; j++)
                 {
                     int buff = mulH[i] + mulV[j];
-                    for (int k = 0; k < (smallerM); k += 2)
+                    for (int k = 0; k < (m1 - smallerM); k += 2)
                     {
                         buff += (matr1[i, k + 1] + matr2[k, j]) * (matr1[i, k] + matr2[k + 1, j]);
                     }
@@ -135,7 +135,7 @@ namespace Lab2
                 }
             }
 
-            if (m1 % 2 == 1)
+            if (smallerM == 1)
             {
                 for (int i = 0; i < n1; i++)
                 {
