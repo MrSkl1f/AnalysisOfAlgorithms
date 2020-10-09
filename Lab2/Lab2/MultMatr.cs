@@ -92,8 +92,6 @@ namespace Lab2
             Array mulH = new Array(matr1.N);
             Array mulV = new Array(matr2.M);
 
-            int n2Mod2 = matr2.N % 2;
-
             for (int i = 0; i < matr1.N; i++)
             {
                 for (int j = 0; j < (matr1.M - matr1.M % 2); j += 2)
@@ -125,12 +123,11 @@ namespace Lab2
 
             if (matr1.M % 2 == 1)
             {
-                int m1Min_1 = matr1.M - 1;
                 for (int i = 0; i < matr1.N; i++)
                 {
                     for (int j = 0; j < matr2.M; j++)
                     {
-                        result[i, j] += matr1[i, m1Min_1] * matr2[m1Min_1, j];
+                        result[i, j] += matr1[i, matr1.M - 1] * matr2[matr1.M - 1, j];
                     }
                 }
             }
