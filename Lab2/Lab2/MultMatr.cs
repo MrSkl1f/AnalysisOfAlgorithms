@@ -47,18 +47,17 @@ namespace Lab2
             Array mulH = new Array(n1);
             Array mulV = new Array(m2);
 
-            int halfM1 = m1 / 2;
             for (int i = 0; i < n1; i++)
             {
-                for (int j = 0; j < halfM1; j++)
+                for (int j = 0; j < m1 / 2; j++)
                 {
                     mulH[i] += matr1[i, j * 2] * matr1[i, j * 2 + 1];
                 }
             }
-            int halfN2 = n2 / 2;
+            
             for (int i = 0; i < m2; i++)
             {
-                for (int j = 0; j < halfN2; j++)
+                for (int j = 0; j < n2 / 2; j++)
                 {
                     mulV[i] += matr2[j * 2, i] * matr2[j * 2 + 1, i];
                 }
@@ -82,7 +81,7 @@ namespace Lab2
                 {
                     for (int j = 0; j < m2; j++)
                     {
-                        result[i, j] += matr1[i, matr1.M - 1] * matr2[matr1.M - 1, j];
+                        result[i, j] += matr1[i, m1 - 1] * matr2[m1 - 1, j];
                     }
                 }
             }
@@ -128,7 +127,7 @@ namespace Lab2
                 for (int j = 0; j < m2; j++)
                 {
                     int buff = mulH[i] + mulV[j];
-                    for (int k = 0; k < (m1 - m1 % 2); k += 2)
+                    for (int k = 0; k < (smallerM); k += 2)
                     {
                         buff += (matr1[i, k + 1] + matr2[k, j]) * (matr1[i, k] + matr2[k + 1, j]);
                     }
