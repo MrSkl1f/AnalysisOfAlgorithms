@@ -17,7 +17,7 @@ namespace Lab2
                 return null;
             }
 
-            Matrix result = new Matrix(matr1.N, matr2.M);
+            Matrix result = new Matrix(n1, m2);
 
             for (int i = 0; i < n1; i++)
             {
@@ -47,19 +47,20 @@ namespace Lab2
             Array mulH = new Array(n1);
             Array mulV = new Array(m2);
 
+            int halfM1 = m1 / 2;
             for (int i = 0; i < n1; i++)
             {
-                for (int j = 0; j < m1 / 2; j++)
+                for (int j = 0; j < halfM1; j++)
                 {
-                    mulH[i] = mulH[i] + matr1[i, j * 2] * matr1[i, j * 2 + 1];
+                    mulH[i] += matr1[i, j * 2] * matr1[i, j * 2 + 1];
                 }
             }
-
+            int halfN2 = n2 / 2;
             for (int i = 0; i < m2; i++)
             {
-                for (int j = 0; j < n2 / 2; j++)
+                for (int j = 0; j < halfN2; j++)
                 {
-                    mulV[i] = mulV[i] + matr2[j * 2, i] * matr2[j * 2 + 1, i];
+                    mulV[i] += matr2[j * 2, i] * matr2[j * 2 + 1, i];
                 }
             }
 
@@ -70,7 +71,7 @@ namespace Lab2
                     result[i, j] = -mulH[i] - mulV[j];
                     for (int k = 0; k < m1 / 2; k++)
                     {
-                        result[i, j] = result[i, j] + (matr1[i, 2 * k + 1] + matr2[2 * k, j]) * (matr1[i, 2 * k] + matr2[2 * k + 1, j]);
+                        result[i, j] += (matr1[i, 2 * k + 1] + matr2[2 * k, j]) * (matr1[i, 2 * k] + matr2[2 * k + 1, j]);
                     }
                 }
             }
@@ -81,7 +82,7 @@ namespace Lab2
                 {
                     for (int j = 0; j < m2; j++)
                     {
-                        result[i, j] = result[i, j] + matr1[i, matr1.M - 1] * matr2[matr1.M - 1, j];
+                        result[i, j] += matr1[i, matr1.M - 1] * matr2[matr1.M - 1, j];
                     }
                 }
             }
@@ -104,19 +105,21 @@ namespace Lab2
             Array mulH = new Array(n1);
             Array mulV = new Array(m2);
 
+            int smallerM = m1 - m1 % 2;
             for (int i = 0; i < n1; i++)
             {
-                for (int j = 0; j < (m1 - m1 % 2); j += 2)
+                for (int j = 0; j < (smallerM); j += 2)
                 {
-                    mulH[i] += matr1[i, j] * matr1[i, j + 1];
+                    mulH[i] -= matr1[i, j] * matr1[i, j + 1];
                 }
             }
 
+            int smallerN = n2 - n2 % 2;
             for (int i = 0; i < m2; i++)
             {
-                for (int j = 0; j < (n2 - n2 % 2); j += 2)
+                for (int j = 0; j < (smallerN); j += 2)
                 {
-                    mulV[i] += matr2[j, i] * matr2[j + 1, i];
+                    mulV[i] -= matr2[j, i] * matr2[j + 1, i];
                 }
             }
 
@@ -124,7 +127,7 @@ namespace Lab2
             {
                 for (int j = 0; j < m2; j++)
                 {
-                    int buff = -(mulH[i] + mulV[j]);
+                    int buff = mulH[i] + mulV[j];
                     for (int k = 0; k < (m1 - m1 % 2); k += 2)
                     {
                         buff += (matr1[i, k + 1] + matr2[k, j]) * (matr1[i, k] + matr2[k + 1, j]);
@@ -139,7 +142,7 @@ namespace Lab2
                 {
                     for (int j = 0; j < m2; j++)
                     {
-                        result[i, j] += matr1[i, matr1.M - 1] * matr2[matr1.M - 1, j];
+                        result[i, j] += matr1[i, m1 - 1] * matr2[m1 - 1, j];
                     }
                 }
             }
