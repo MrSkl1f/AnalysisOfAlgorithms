@@ -1,21 +1,24 @@
 \documentclass[12pt]{report}
-\usepackage[utf8]{inputenc}
-\usepackage[english, russian]{babel}
-\usepackage{fontspec} 
+\usepackage{fontspec}
 \usepackage[14pt]{extsizes}
+\usepackage[english, russian]{babel} 
+\defaultfontfeatures{Ligatures={TeX},Renderer=Basic} 
+\setmainfont[Ligatures={TeX,Historic}]{Times New Roman}
+\usepackage{setspace} % полуторный интервал
+
 \usepackage{caption}
+
 \usepackage{graphicx}
 \usepackage[left=2cm, right=2cm, top=2cm, bottom=2.5cm]{geometry}
-\usepackage{listings}
-\usepackage{titlesec, blindtext, color} % подключаем нужные пакеты
-\usepackage{setspace} % полуторный интервал
 \usepackage{hyperref}
 \usepackage{amsmath,amsfonts,amssymb,amsthm} 
+
+\usepackage{titlesec, blindtext, color} % подключаем нужные пакеты
 \definecolor{gray75}{gray}{0.75} % определяем цвет
 \newcommand{\hsp}{\hspace{20pt}} % длина линии в 20pt
-% titleformat определяет стиль
-\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}\hsp}{0pt}{\Huge\bfseries}
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
 
+\usepackage{listings}
 % Для листинга кода:
 \lstset{ 
 	language=[Sharp]C,                 % выбор языка для подсветки (здесь это С)
@@ -33,8 +36,7 @@
 	breaklines=true,           % автоматически переносить строки (да\нет)
 	breakatwhitespace=false, % переносить строки только если есть пробел
 }
-\defaultfontfeatures{Ligatures={TeX},Renderer=Basic} 
-\setmainfont[Ligatures={TeX,Historic}]{Times New Roman}
+
 \begin{document}
 	
 	%\def\chaptername{} % убирает "Глава"
@@ -137,7 +139,7 @@
 	Операция умножения двух матриц выполнима только в том случае, если число столбцов в первом сомножителе равно числу строк во втором; в этом случае говорят, что матрицы согласованы. В частности, умножение всегда выполнимо, если оба сомножителя — квадратные матрицы одного и того же порядка. 
 	
 	\section{Алгоритм Винограда}
-	Если посмотреть на результат умножения двух матриц, то видно, что каждый элемент в нем представляет собой скалярное произведение соответствующих строки и столбца исходных матриц. Можно заметить также, что такое умножение допускает предварительную обработку, позволяющую часть работы выполнить заранее. \par
+	Если посмотреть на результат умножения двух матриц, то видно, что каждый элемент в нем представляет собой скалярное произведение соответствующих строки и столбца исходных матриц. Можно заметить также, что такое умножение допускает предварительную обработку, позволяющую часть работы выполнить заранее. \hyperref[literature]{[1]}\par
 	Рассмотрим два вектора $V = (v_{1},v_{2},v_{3},v_{4})$ и $W = (w_{1},w_{2},w_{3},w_{4})$. Их скалярное произведение равно:
 	\begin{equation}
 		V * W = v_{1}w_{1} + v_{2}w_{2} + v_{3}w_{3} + v_{4}w_{4}
@@ -194,7 +196,7 @@
 		\item[4)] операция обращения к ячейки матрицы [i, j] имеет трудоёмкость равную двум.
 	\end{enumerate}
 	
-	\newpage
+	%\newpage
 	\section{Трудоемкость алгоритмов}
 	Оценим трудоемкости алгоритмов.
 	\subsection{Трудоемкость предварительной проверки}
@@ -229,8 +231,9 @@
 		15n_{1}m_{2} + 4n_{1} + 2 &&, \text{выполнение}\\
 	\end{bmatrix} $ 
 	
-	Результат:	$13n_{1}m_{2}m_{1}+\frac{15}{2}n_{1}m_{1}+\frac{15}{2}m_{2}n_{2}+12n_{1}m_{2}+5n_{1}+5m_{2}+4n_{1}+6+ \begin{bmatrix}
-		2    &&, \text{невыполнение условия}\\
+	Результат:	$13n_{1}m_{2}m_{1}+\frac{15}{2}n_{1}m_{1}+\frac{15}{2}m_{2}n_{2}+12n_{1}m_{2}+5n_{1}+5m_{2}+4n_{1}+6+$\par
+	$\begin{bmatrix}
+		2    &&, \text{невыполнение}\\
 		15n_{1}m_{2} + 4n_{1} + 2 &&, \text{выполнение}\\
 	\end{bmatrix} $
 
@@ -245,13 +248,13 @@
 		10n_{1}m_{2} + 4n_{1} + 2 &&, \text{выполнение}\\
 	\end{bmatrix}$\par
 	Результат:
-	$\frac{17}{2}n_{1}m_{2}m_{1}+\frac{11}{2}n_{1}m_{1}+\frac{11}{2}m_{2}n_{2}+9n_{1}m_{2}+8n_{1}+4m_{2}+6+\\
-	\begin{bmatrix}
+	$\frac{17}{2}n_{1}m_{2}m_{1}+\frac{11}{2}n_{1}m_{1}+\frac{11}{2}m_{2}n_{2}+9n_{1}m_{2}+8n_{1}+4m_{2}+6+$\par
+	$\begin{bmatrix}
 		2    &&, \text{невыполнение}\\
 		10n_{1}m_{2} + 4n_{1} + 2 &&, \text{выполнение}\\
 	\end{bmatrix}$
 	
-	\subsection{Вывод}
+	\section{Вывод}
 	В данном разделе были рассмотрены схемы алгоритмов умножения матриц, введена модель оценки трудоемкости алгоритма и были рассчитаны трудоемкости алгоритмов.
 	
 	\chapter{Технологическая часть}
@@ -269,9 +272,9 @@
 	\end{enumerate}
 	
 	\section{Средства реализации}
-	В качестве языка программирования был выбран C\#, так как я знаком с данным языком программирования, имею представление о способах тестирования программы.\par
-	Средой разработки Visual Studio.\par 
-	Для замеров процессорного времени используется функция $Stopwatch$.
+	В качестве языка программирования был выбран C\#,\hyperref[literature]{[2]} так как я знаком с данным языком программирования, имею представление о способах тестирования программы.\par
+	Средой разработки Visual Studio.\hyperref[literature]{[3]}\par 
+	Для замеров процессорного времени используется функция $Stopwatch$.\hyperref[literature]{[4]}
 	
 	\section{Сведения о модулях программы}
 	Программа состоит из:
@@ -550,9 +553,36 @@
 	\end{figure}
 
 	\section{Анализ времени работы алгоритмов }
-	
+	Выполняется первый эксперимент при четном размере матриц. Берутся две матрицы размерами 100х100, 200х200, 300х300, 400х400, 500х500. Ячейки матрицы заполняются произвольно. Результат можно увидеть на \hyperref[Graphics1]{рисунке 6}.
+	\begin{figure}[h!]\label{Graphics1}
+		\center{\includegraphics[scale=0.8]{source/Graphics1.png}}
+		\caption*{Рисунок 6. Первый эксперимент для матриц с четными размерами}
+	\end{figure} 
 	\newpage
-	литература 
-	Виноград: http://www.algolib.narod.ru/Math/Matrix.html
+	\noindent Выполняется второй эксперимент при нечетном размере матриц. Берутся две матрицы размерами 101х101, 201х201, 301х301, 401х401, 501х501. Ячейки матрицы заполняются произвольно. Результат можно увидеть на \hyperref[Graphics2]{рисунке 7}.
+	\begin{figure}[h!]\label{Graphics2}
+		\center{\includegraphics[scale=0.8]{source/Graphics2.png}}
+		\caption*{Рисунок 6. Второй эксперимент для матриц с нечетными размерами}
+	\end{figure} 
+	\newpage
+	
+	\section{Вывод}
+	Результаты тестирования показывают, что самым быстрым является модифицированный алгоритм Винограда. Самым медленным оказался стандартный алгоритм умножения матриц.
+
+	\chapter*{Заключение}
+	\addcontentsline{toc}{chapter}{Заключение}
+	В ходе лабораторной работы были изучены алгоритмы умножения матриц: стандартный и Винограда. Также был модифицирован алгоритм Винограда. Были даны теоритические оценки алгоритмов умножения матриц. Была оценена трудоемкость алгоритмов. Также сравнили время работы алгоритмов, в результате которого стало понятно, что модифицированный алгоритм Винограда примерно в 2 раза быстрее, чем стандартный алгоритм и в 1.5 раза быстрее, чем алгоритм Винограда.
+
+	\chapter*{Литература}
+	\addcontentsline{toc}{chapter}{Литература}
+	\begin{enumerate}
+		\label{literature}
+		\item Умножение матриц. -URL: \href{http://www.algolib.narod.ru/Math/Matrix.html}{http://www.algolib.narod.ru/Math/Matrix.html} (дата обращения: 11.10.2020). -Текст: электронный.
+		\item  Документация по C\#. -URL: \href{https://docs.microsoft.com/ru-ru/dotnet/csharp/}{https://docs.microsoft.com/ru-ru/dotnet/csharp/} (дата обращения: 01.10.2020). -Текст: электронный.
+		\item Документация по семейству продуктов Visual Studio. -URL:\par \href{https://docs.microsoft.com/ru-ru/visualstudio/?view=vs-2019}{https://docs.microsoft.com/ru-ru/visualstudio/?view=vs-2019 } (дата обращения: 01.10.2020). -Текст: электронный.
+		\item Stopwatch Класс. -URL: \href{https://goo.su/2e99}{https://goo.su/2e99 } (дата обращения: 01.10.2020). -Текст: электронный.
+		\item Под капотом у Stopwatch. -URL:  \href{https://habr.com/ru/post/226279/}{https://habr.com/ru/post/226279/} (дата обращения: 01.10.2020). Текст: электронный.
+	\end{enumerate}
+
 \end{document}
 
