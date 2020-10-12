@@ -1,0 +1,219 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{fontspec} 
+\usepackage[14pt]{extsizes}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage[left=2cm, right=2cm, top=1cm, bottom=2.5cm]{geometry}
+\usepackage{listings}
+\usepackage{titlesec, blindtext, color} % подключаем нужные пакеты
+\usepackage{setspace} % полуторный интервал
+\usepackage{hyperref}
+\definecolor{gray75}{gray}{0.75} % определяем цвет
+\newcommand{\hsp}{\hspace{20pt}} % длина линии в 20pt
+% titleformat определяет стиль
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}\hsp}{0pt}{\Huge\bfseries}
+\defaultfontfeatures{Ligatures={TeX},Renderer=Basic} 
+\setmainfont[Ligatures={TeX,Historic}]{Times New Roman}
+\begin{document}
+	\begin{titlepage}
+		\centering
+		{\scshape\LARGE МГТУ им. Баумана \par}
+		\vspace{3cm}
+		{\scshape\Large Лекции по анализу алгоритмов\par}
+		\vfill
+		\large \textit {Москва, 2020} \par
+	\end{titlepage}
+	\onehalfspacing
+	\tableofcontents
+	\chapter*{Лекция 1}
+	\addcontentsline{toc}{chapter}{Лекция 1}
+	\section*{Введение}
+	\addcontentsline{toc}{section}{Введение}
+	\begin{enumerate}
+		\item\underline{\textbf{Оценки качества}}
+		\begin{itemize}
+			\item Универсальность
+			\begin{itemize}
+				\item Ресурсные
+				\begin{itemize}
+					\item трудоемкость
+					\item память
+				\end{itemize}
+				\item ?
+			\end{itemize}
+			\item Проблемно-ориентированность
+		\end{itemize}
+	
+		\item\underline{\textbf{Вход}}\par
+		$D = \{d_{i} | i=1,m\}$
+		
+		\item\underline{\textbf{Длина входа}}\par
+		$\mu_{Z}(D) = n, h = |D|$\par
+		Пример:\par $|D| = 2n^{2} + 1$\par
+		$\mu_{Z}(D) = n = \sqrt{\frac{|D| - 1}{2}}$
+		
+		\item\underline{\textbf{Трудоемкость}}\par
+		$f_{A}(D) -$ число элементарных операций принятой модели вычислений, (выполненных механизмом реализаций по механизму A) заданных алгоритмом $A$ на входе $D$.\par
+		$z\rightarrow A_{1}A_{2} \qquad f_{A_{1}}(D) < f_{A_{2}}(D)$\par 
+		
+		\item\underline{\textbf{$D_{n}$}}\par
+		$D_{n} = \{D | \mu_{z}(D)=n\}$\par
+		Пример:\par
+		$\beta(d_{i})=16$\par
+		$n=10$\par
+		$|D_{10}|=2^{160}$
+		
+		\item\underline{\textbf{Лудший, худший и средний случаи}}\par
+		$f_{A}^{\vee} \equiv^{def} min_{D \in D_{n}} f_{A}(D)$\qquad - худший\par
+		$f_{A}^{\wedge} \equiv^{def} max_{D \in D_{n}} f_{A}(D)$\qquad - лучший\par
+		$\bar{f_{A}}(n) = \sum_{D \in D_{n}}P(D)f_{A}(n) $\qquad - средний\par
+		$P(D) -$ вероятность входа, $f_{A}(n) -$трудоемкость
+		
+		\item\underline{\textbf{Память}}\par
+		$V(D) = V_{D} + V_{R} + V_{dop} + V_{EXE} + V_{stack}$\par
+		$V_{D} = |D|$\par
+		$V_{EXE}$ - часть ASM кода?\par
+		$V_{A}^{\vee}, V_{A}^{\wedge}(n), \bar{V_{A}}(n) \rightarrow V_{dop}$\par
+	\end{enumerate}
+
+	\section*{Примеры анализа}
+	\addcontentsline{toc}{section}{Примеры анализа}
+	\begin{enumerate}
+		\item\underline{\textbf{Объем}}\par
+		$a \leftrightarrow b$\par
+		\begin{itemize}
+			\item $Swap(a, b)$\par
+			$\qquad t \leftarrow a$\par
+			$\qquad a \leftarrow b$\par
+			$\qquad b \leftarrow t$\par
+			$End$\par
+			
+			\item $Swap2(a,b)$\par
+			$\qquad a \leftarrow a + b$\par
+			$\qquad b \leftarrow a - b$\par
+			$\qquad a \leftarrow a - b$\par
+		\end{itemize}
+		
+		\item\underline{\textbf{for}}\par
+		for $j \leftarrow 1$ to $n$\par
+		$\qquad j \leftarrow 1$\par
+		$\qquad$ code\par
+		$\qquad j \leftarrow j + 1$\par
+		$\qquad$ If $j <= n$, goto code\par
+		
+		\item\underline{\textbf{Sum}}\par
+		$Sum(A, n; S)$\par
+		$\qquad s \leftarrow 0$\par
+		$\qquad$ for $k \leftarrow 1$ to $n$\par
+		$\qquad\qquad s \leftarrow s + A[k]$\par
+		$End$\par
+		$f_{A}^{\vee}(n)=f_{A}^{\wedge}(n) = f_{A}(n) = 1 + 1 + n(3 + 3) = 6n + 2$
+		
+		\item\underline{\textbf{MultMatr}}\par
+		$MultMatr(A, B, n; C)$\par
+		$\qquad$ for $i \leftarrow 1$ to $n$\par
+		$\qquad\qquad$ for $ j \leftarrow 1$ to $n$\par
+		$\qquad\qquad\qquad s \leftarrow 0$\par
+		$\qquad\qquad\qquad$ for $k \leftarrow 1$ to $n$\par
+		$\qquad\qquad\qquad\qquad s \leftarrow s + A[i,k]*B[k,j]$\par
+		$\qquad\qquad\qquad C[i,j] \leftarrow s$\par
+		$End$\par
+		$f_{A}(n) = 1 + n(3 + 1 + n(3 + 1 + 1 + n(3 + 7) + 3)) = 10n^{3} + 8n^{2} + 4n + 1$\par
+	\end{enumerate}
+
+	\chapter*{Лекция 2}
+	\addcontentsline{toc}{chapter}{Лекция 2}
+	\section*{Примеры анализа}
+	\addcontentsline{toc}{section}{Примеры анализа}
+	\begin{enumerate}
+		\item \underline{\textbf{Умножение матриц}} $\rightarrow f_{A}(D) = f_{A}(n)$
+		\item \underline{\textbf{Возведение в степень}} $y = x^{k}$\par
+		$Pow(x,k;y)$\par
+		\underline{! Проверки} $x, k | k \geq 1$\par
+		$y \leftarrow 1$\par
+		for $j \leftarrow 1$ to $k$\par
+		$\qquad y \leftarrow y + x$\par
+		$End$\par
+		\underline{? Вопрос}
+		\begin{enumerate}
+			\item $\mu_{z}(D)=2$
+			\item $f_{A}(D)=f_{A}(k)=2+k^{1}$
+		\end{enumerate}
+		\item \underline{\textbf{Max$(A, n; M)$}}\par
+		$M \leftarrow A[1]$\par
+		for $j \leftarrow 2$ to $n$\par
+		$\qquad$ if $M < A[j]$\par
+		$\qquad\qquad$then\par
+		$\qquad\qquad M \leftarrow A[j]$\par
+		$End$\par
+		\underline{Лучший, худший случаи:}\par
+		$f_{A}^{\vee}(n)=^{Max=a_{1}} 3 + (n-1)(3+2)=5n-2$\par
+		$f_{A}^{\wedge}(n)=3+(n-1)(3+2+2)=7n-4$\par
+	\end{enumerate}
+
+	\section*{Классификация \underline{алгоритмов} по типу трудоемкости}
+	\addcontentsline{toc}{section}{Классификация алгоритмов по типу трудоемкости}	
+	\begin{enumerate}
+		\item \underline{\textbf{Класс $N$}}\par
+		Количественно-зависимые\par
+		$f_{A}(D)=f_{A}(\mu_{z}(D))=f_{A}(n)$\par\par
+		Матрично-векторные операции\par
+		\item \underline{\textbf{Класс $PR$}}\par
+		Параметр-зависимые\par
+		$f_{A}(D)=f_{A}(pr_{1},pr_{2},...,pr_{k})$\par\par
+		Стандартные функции по $eps$\par
+		\item \underline{\textbf{Класс $NPR$}}\par
+		Количественно-параметрические алгоритмы\par
+		$f_{A}(D)=f_{A}(n,pr_{1},...)$\par
+		Логическая конструкция\par
+		$If ...$\par
+		$\qquad then$\par
+		$\qquad\qquad ...$\par
+		$\qquad else$\par
+		$\qquad\qquad ...$\par
+		\item \underline{\textbf{Декомпозиция $f_{A}(D)$}}\par
+		$ln(x_{1}+x_{2})$\par
+		\begin{enumerate}
+			\item Аддитивно\par
+			$f_{A}(n,pr)=f_{n}(n)+g(pr)$\par
+			$f_{A}^{\wedge}(n)=f_{n}(n)+g^{\wedge}(n)$\par
+			$g^{\wedge}(n)$ - $max_{D \in D_{n}}(g(pr))$\par
+			\item Мультипликативность\par
+			$f_{A}(D)=f_{n}(n)*g(pr)$\par
+		\end{enumerate}
+		\item \underline{\textbf{$\prec$ (П.Д.Раймон)}}\par
+		$a<b\qquad f(.)\prec g(.)\qquad f(x)$\par
+		$f\prec g\equiv^{def} lim_{x\rightarrow \infty} \frac{f}{g}=0$\par
+		$f \asymp g \equiv^{def}lim...=C\neq 0$\par
+		\item \underline{\textbf{Подклассы в $NPR$}}
+		\begin{enumerate}
+			\item $ NPRL(Low)$\par
+			$g^{\wedge}(n) \prec f_{n}(n)$\par
+			$f_{n}(n)=17n^{4}+...$
+			\item $NPRE(Eq...)$\par
+			$g^{\wedge}(n)\asymp f_{n}(n)$
+			\item $NPRH(H...)$\par
+			$g^{\wedge}\prec f_{n}(N)$\par
+		\end{enumerate}
+	\end{enumerate}	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
