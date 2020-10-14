@@ -1,0 +1,143 @@
+\documentclass[12pt]{report}
+\usepackage{fontspec}
+\usepackage[14pt]{extsizes}
+\usepackage[english, russian]{babel} 
+\defaultfontfeatures{Ligatures={TeX},Renderer=Basic} 
+\setmainfont[Ligatures={TeX,Historic}]{Times New Roman}
+\usepackage{setspace} % полуторный интервал
+
+\usepackage{caption}
+
+\usepackage{graphicx}
+
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{amsmath,amsfonts,amssymb,amsthm} 
+
+\usepackage{titlesec, blindtext, color} % подключаем нужные пакеты
+\definecolor{gray75}{gray}{0.75} % определяем цвет
+\newcommand{\hsp}{\hspace{20pt}} % длина линии в 20pt
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+
+\usepackage{listings}
+% Для листинга кода:
+\lstset{ 
+	language=[Sharp]C,                 % выбор языка для подсветки (здесь это С)
+	basicstyle=\small\sffamily, % размер и начертание шрифта для подсветки кода
+	numbers=left,               % где поставить нумерацию строк (слева\справа)
+	numberstyle=\tiny,           % размер шрифта для номеров строк
+	stepnumber=1,                   % размер шага между двумя номерами строк
+	numbersep=5pt,                % как далеко отстоят номера строк от подсвечиваемого кода
+	showspaces=false,            % показывать или нет пробелы специальными отступами
+	showstringspaces=false,      % показывать или нет пробелы в строках
+	showtabs=false,             % показывать или нет табуляцию в строках
+	frame=single,              % рисовать рамку вокруг кода
+	tabsize=2,                 % размер табуляции по умолчанию равен 2 пробелам
+	captionpos=t,              % позиция заголовка вверху [t] или внизу [b] 
+	breaklines=true,           % автоматически переносить строки (да\нет)
+	breakatwhitespace=false, % переносить строки только если есть пробел
+}
+
+\begin{document}
+	
+	%\def\chaptername{} % убирает "Глава"
+	\begin{titlepage}
+		\begin{table}[ht]
+			\centering
+			\begin{tabular}{|c|p{420pt}|} 
+				\hline
+				\begin{tabular}[c]{@{}c@{}} \includegraphics[scale=0.37]{source/EmblemBMSTU} \\\end{tabular} &
+				\footnotesize\begin{tabular}[c]{@{}c@{}}\textbf{Министерство~науки~и~высшего~образования~Российской~Федерации}\\\textbf{Федеральное~государственное~бюджетное~образовательное~учреждение}\\\textbf{~высшего~образования}\\\textbf{«Московский~государственный~технический~университет}\\\textbf{имени~Н.Э.~Баумана}\\\textbf{(национальный~исследовательский~университет)»}\\\textbf{(МГТУ~им.~Н.Э.~Баумана)}\\\end{tabular}  \\
+				\hline
+			\end{tabular}
+		\end{table}
+		\noindent\rule{\textwidth}{4pt}
+		\noindent\rule[14pt]{\textwidth}{1pt}
+		\hfill 
+		\noindent
+		\makebox{ФАКУЛЬТЕТ~}%
+		\makebox[\textwidth][l]{\underline{~~~~«Информатика и системы управления»~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}}%
+		\\
+		\noindent
+		\makebox{КАФЕДРА~}%
+		\makebox[\textwidth][l]{\underline{~~~~~~~«Программное обеспечение ЭВМ и информационные технологии»~~~~~~~~}}%
+		\\
+		
+		
+		\begin{center}
+			\vspace{3cm}
+			{\bf\huge Отчёт\par}
+			{\bf\Large по лабораторной работе № 3\par}
+			\vspace{0.5cm}
+		\end{center}
+		
+		
+		\noindent
+		\makebox{\large{\bf Название:}~~~}
+		\makebox[\textwidth][l]{\large\underline{~Алгоритмы сортировки~}}\\
+		
+		\noindent
+		\makebox{\large{\bf Дисциплина:}~~~}
+		\makebox[\textwidth][l]{\large\underline{~Анализ алгоритмов~}}\\
+		
+		\vspace{1.5cm}
+		\noindent
+		\begin{tabular}{l c c c c c}
+			Студент      & ~ИУ7-55Б~               & \hspace{3.5cm} & \hspace{3.5cm}                 & &  Д.О. Склифасовский \\\cline{2-2}\cline{4-4} \cline{6-6} 
+			\hspace{3cm} & {\footnotesize(Группа)} &                & {\footnotesize(Подпись, дата)} & & {\footnotesize(И.О. Фамилия)}
+		\end{tabular}
+		
+		\vspace{1cm}
+		
+		\noindent
+		\begin{tabular}{l c c c c}
+			Преподователь & \hspace{6cm}   & \hspace{3.5cm}                 & & ~~~~~~ Л.Л. Волкова ~~~~~~\\\cline{3-3} \cline{5-5} 
+			\hspace{3cm}  &                & {\footnotesize(Подпись, дата)} & & {\footnotesize(И.О. Фамилия)}
+		\end{tabular}
+		
+		\begin{center}	
+			\vfill
+			\large \textit {Москва, 2020}
+		\end{center}
+		
+		\thispagestyle {empty}
+		\pagebreak
+	\end{titlepage}
+	\restoregeometry
+	
+	\tableofcontents
+	\onehalfspacing
+	\newpage
+	\chapter*{Введение}
+	\addcontentsline{toc}{chapter}{Введение}
+	Цель работы: изучение алгоритмов сортировки массивов. В данной лабораторной работе рассматриваются 3 алгоритма:
+	\begin{enumerate}
+		\item[1)] сортировка пузырьком;
+		\item[2)] сортировка шейкером;
+		\item[3)] сортировка вставками. 
+	\end{enumerate}
+	\noindent Также требуется изучить рассчет сложности алгоритмов. В ходе лабораторной работы необходимо:
+	\begin{enumerate}
+		\item[1)] изучить алгоритмы сортировки;
+		\item[2)] дать теоритическую оценку сортировок пузырьком, шейкером и вставками;
+		\item[3)] реализовать три алгоритма сортировки на одном из языков программирования;
+		\item[4)] сравнить алгоритмы сортировки.    
+	\end{enumerate}
+
+	\chapter{Аналитическая часть}
+	В данном разделе представлено описание алгоритмов сортировки массивов.
+	\section{Сортировка пузырьком}
+	Сортировка пузырьком — один из самых известных алгоритмов сортировки. Здесь нужно последовательно сравнивать значения соседних элементов и менять числа местами, если предыдущее оказывается больше последующего. Таким образом элементы с большими значениями оказываются в конце списка, а с меньшими остаются в начале.
+	\par\noindent Этот алгоритм считается учебным и почти не применяется на практике из-за низкой эффективности: он медленно работает на тестах, в которых маленькие элементы (их называют «черепахами») стоят в конце массива. Однако на нём основаны многие другие методы, например, шейкерная сортировка и сортировка расчёской.
+	\section{Сортировка шейкером}
+	Шейкерная сортировка отличается от пузырьковой тем, что она двунаправленная: алгоритм перемещается не строго слева направо, а сначала слева направо, затем справа налево.
+	\section{Сортировка вставками}
+	При сортировке вставками массив постепенно перебирается слева направо. При этом каждый последующий элемент размещается так, чтобы он оказался между ближайшими элементами с минимальным и максимальным значением.
+	\section{Вывод}
+	Было представлено описание алгоритмов сортировки массивов. В основном все алгоритмы сортировок основаны на алгоритме сортировки пузырьком.
+
+	\chapter{Конструкторская часть}
+	В данном разделе представлены съемы разработанных алгоритмов. Также оценивается трудоемкость алгоритмов.
+
+\end{document}
+
