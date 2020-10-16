@@ -44,9 +44,9 @@
 	\begin{titlepage}
 		\begin{table}[ht]
 			\centering
-			\begin{tabular}{|c|p{420pt}|} 
+			\begin{tabular}{|c|p{400pt}|} 
 				\hline
-				\begin{tabular}[c]{@{}c@{}} \includegraphics[scale=0.37]{source/EmblemBMSTU} \\\end{tabular} &
+				\begin{tabular}[c]{@{}c@{}} \includegraphics[scale=0.40]{source/EmblemBMSTU} \\\end{tabular} &
 				\footnotesize\begin{tabular}[c]{@{}c@{}}\textbf{Министерство~науки~и~высшего~образования~Российской~Федерации}\\\textbf{Федеральное~государственное~бюджетное~образовательное~учреждение}\\\textbf{~высшего~образования}\\\textbf{«Московский~государственный~технический~университет}\\\textbf{имени~Н.Э.~Баумана}\\\textbf{(национальный~исследовательский~университет)»}\\\textbf{(МГТУ~им.~Н.Э.~Баумана)}\\\end{tabular}  \\
 				\hline
 			\end{tabular}
@@ -60,7 +60,7 @@
 		\\
 		\noindent
 		\makebox{КАФЕДРА~}%
-		\makebox[\textwidth][l]{\underline{~~~~~~~«Программное обеспечение ЭВМ и информационные технологии»~~~~~~~~}}%
+		\makebox[\textwidth][l]{\underline{~~~~~~«Программное обеспечение ЭВМ и информационные технологии»~}}%
 		\\
 		
 		
@@ -204,7 +204,7 @@
 	\end{enumerate}
 
 	\section{Средства реализации}
-	В качестве языка программирования был выбран C#, так как я знаком с данным языком программирования, имею представление о способах тестирования программы.
+	В качестве языка программирования был выбран C\#, так как я знаком с данным языком программирования, имею представление о способах тестирования программы.
 	\noindent Средой разработки Visual Studio.
 	\noindent Для замеров процессорного времени используется функция Stopwatch.
 
@@ -212,7 +212,150 @@
 	Программа состоит из:
 	\begin{enumerate}
 		\item[1)] Program.cs - главный файл программы, в котором располагается точка входа в программу;
-		\item[2)] Array.cs - файл класса Array. 
+		\item[2)] Array.cs - файл класса Array;
+		\item[3)] Sort.cs - файл класса Sort. В нем находятся алгоритмы сортировки массивов.
 	\end{enumerate}
+
+	\section{Листинг кода программы}
+	\begin{lstlisting}[label=Array,caption=Класс Array для работы с массивами]
+		class Array
+		{
+			private int[] array;
+			private int n;
+			public Array() { }
+
+			public Array(int n)
+			{
+				this.n = n;
+				array = new int[n];
+			}
+
+			public int N
+			{
+				get { return n; }
+				set { if (value > 0) n = 0; }
+			}
+
+			public int this[int i]
+			{
+				get { return array[i]; }
+				set { array[i] = value; }
+			}
+
+			public void Copy(Array arr)
+			{
+				for (int i = 0; i < n; i++)
+				{
+					arr[i] = array[i];
+				}
+			}
+
+			public void Read()
+			{
+				for (int i = 0; i < n; i++)
+				{
+					Console.Write(array[i] + "\t");
+				}
+				Console.WriteLine();
+			}
+
+			public void Fill()
+			{
+				Random rand = new Random();
+				for (int i = 0; i < n; i++)
+				{
+					array[i] = rand.Next(100);
+				}
+			}
+		}
+	\end{lstlisting}
+	\begin{lstlisting}[label=BubleSort,caption=Алгоритм сортировки пузырьком]
+		public static void BubbleSort(Array arr)
+        {
+            int len = arr.N;
+            if (len == 0)
+            {
+                return;
+            }
+
+            for (int indI = 0; indI + 1 < len; indI++)
+            {
+                for (int indJ = 0; indJ + 1 < len - indI; indJ++)
+                {
+                    if (arr[indJ + 1] < arr[indJ])
+                    {
+                        int tmp = arr[indJ];
+                        arr[indJ] = arr[indJ + 1];
+                        arr[indJ + 1] = tmp;
+                    }
+                }
+            }
+        }
+	\end{lstlisting}
+	\begin{lstlisting}[label=ShakerSort,caption=Алгоритм сортировки шейкером]
+		public static void ShakerSort(Array arr)
+        {
+            int len = arr.N;
+            if (len == 0)
+            {
+                return;
+            }
+            int left = 0;
+            int right = len - 1;
+            while (left <= right)
+            {
+                for (int i = left; i < right; i++)
+                {
+                    if (arr[i] > arr[i + 1])
+                    {
+                        int tmp = arr[i];
+                        arr[i] = arr[i + 1];
+                        arr[i + 1] = tmp;
+                    }
+                }
+                right--;
+
+                for (int i = right; i > left; i--)
+                {
+                    if (arr[i - 1] > arr[i])
+                    {
+                        int tmp = arr[i];
+                        arr[i] = arr[i - 1];
+                        arr[i - 1] = tmp;
+                    }
+                }
+                left++;
+            }
+        }
+	\end{lstlisting}
+	\begin{lstlisting}[label=InsertionSort,caption=Алгоритм сортировки вставками]
+		public static void InsertionSort(Array arr)
+        {
+            int len = arr.N;
+            if (len == 0)
+            {
+                return;
+            }
+            for (int i = 1; i < len; i++)
+            {
+                int x = arr[i];
+                int j = i - 1;
+                for (; j >= 0 && arr[j] > x; j--)
+                {
+                    arr[j + 1] = arr[j];
+                }
+                arr[j + 1] = x;
+            }
+        }
+	\end{lstlisting}
+
+	\section{Вывод}
+	В данном разделе были представлены сведения о модулях программы, а также реализованы три алгоритма сортировки массивов.
+
+	\chapter{Экспериментальная часть}
+	В данном разделе представлены результаты работы программы и приведен анализ времени работы каждого из алгоритмов.
+	
+	\section{Примеры работы программы}
+
 \end{document}
 
