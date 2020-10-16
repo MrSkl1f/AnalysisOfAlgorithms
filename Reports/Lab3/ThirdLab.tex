@@ -138,6 +138,44 @@
 
 	\chapter{Конструкторская часть}
 	В данном разделе представлены съемы разработанных алгоритмов. Также оценивается трудоемкость алгоритмов.
+	\section{Разработка алгоритмов}
+	На \hyperref[Schema1]{рисунке 1} изображена схема алгоритма сортировки пузырьком.
+	\begin{figure}[h!]\label{Schema1}
+		\center{\includegraphics[scale=0.95]{source/Schema1.png}}
+		\caption*{Рисунок 1. Схема алгоритма сортировки пузырьком}
+	\end{figure}
+	\newpage
+	На \hyperref[Schema2]{рисунке 2} изображена схема алгоритма сортировки шейкером.
+	\begin{figure}[h!]\label{Schema2}
+		\center{\includegraphics[scale=0.95]{source/Schema2.png}}
+		\caption*{Рисунок 2. Схема алгоритма сортировки шейкером}
+	\end{figure}
+	\newpage
+	На \hyperref[Schema3]{рисунке 3} изображена схема алгоритма сортировки вставками.
+	\begin{figure}[h!]\label{Schema3}
+		\center{\includegraphics[scale=0.95]{source/Schema3.png}}
+		\caption*{Рисунок 1. Схема алгоритма сортировки вставками}
+	\end{figure}
+	\newpage
 
+	\section{Модель трудоемкости}
+	Модель трудоемкости для оценки алгоритмов:
+	\begin{enumerate}
+		\item[1)] стоимость базовых операций единица:\par
+		$=,+,*,\simeq,<,>,\geq,\leq,==,!=,[],+=,-=,*=,/=,++,--$;
+		\item[2)] стоимость цикла:\par
+		$f_{for}=f_{init}+f_{comp}+M(f_{body}+f_{increment}+f_{comp})$\par
+		Пример: $for(i=0,i<M;i++){/* body */}$\par
+		Результат: $2 + M(2+f_{body})$;
+		\item[3)] стоимость условного оператора\par
+		Пусть goto (переход к одной из ветвей) стоит 0, тогда\par
+		\begin{displaymath}
+			f_{f} = \left\{ \begin{array}{l l}
+				min(f_{A},f_{B}), & \textrm{лучший случай}\\
+				max(f_{A},f_{B}), & \textrm{худший случай}\\
+			\end{array} \right.
+		\end{displaymath}
+		\item[4)] операция обращения к ячейки матрицы [i, j] имеет трудоёмкость равную двум.
+	\end{enumerate}
 \end{document}
 
