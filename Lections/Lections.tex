@@ -200,7 +200,7 @@
 	\end{enumerate}	
 
 	\chapter*{Лекция 3}
-	\addcontentsline{toc}{chapter}{Лекция 2}
+	\addcontentsline{toc}{chapter}{Лекция 3}
 	\section*{Математические сведения}
 	\addcontentsline{toc}{section}{Математические сведения}
 	\begin{enumerate}
@@ -235,8 +235,78 @@
 		$f_A(.): D_n \rightarrow_{f_A(.)}N$
 	\end{enumerate}
 
+	\chapter*{Лекция 4}
+	\addcontentsline{toc}{chapter}{Лекция 4}
+	\section*{Поиск $max$ - $\bar{f}_A(n)$}
+	\addcontentsline{toc}{section}{Поиск $max$ - $f_A(n)$}
+	\begin{enumerate}
+		\item \textbf{\underline{Декомпозиция $f_A$}}\par
+		$Max(A,n;M)$\par
+		$\qquad M \leftarrow A[1]$\par
+		$\qquad $for $ j \leftarrow 2 $ to $ n$\par
+		$\qquad\qquad $If $ M<A[j]$\par
+		$\qquad\qquad $then\par
+		$\qquad\qquad\qquad M\leftarrow A[j]$\par
+		End\par
 
+		!Класс NPR
+		$f_A(D\in D_n)=f_n(n)+g(D)$\par
+		$f_n(n)=1+(n-1)(3+2)=5n-4$\par
+		$g(D)=2Y_n$ ($Y_n$ - сл вел = числу присв Max)\par
+		$Y_n \in [1,n] \Rightarrow \bar{f_A}(n)=E(f_n(n)+2Y_n)=f_n(n)+2E(Y_n)$
 
+		\item \textbf{\underline{Применение метода классов}}\par
+		$n=n_0\rightarrow $ экстраполяция на произвольную $n$\par
+		$n_0 = 4$\par
+
+		$D \in D_4 \rightarrow "1"(min),"2"(min_2),"3"(max_2), "4"(max)$\par
+		$D_1234,...,D_2431,...,D_4321 \}= 24$\par
+		$4xxx \}G \Rightarrow Y_4=1$\par
+		$3xxx \}G \Rightarrow Y_4=2$\par
+		$2134 \rightarrow 3 \qquad 1234 \rightarrow 4$\par
+		$2143 \rightarrow 2 \qquad 1243 \rightarrow 3$\par
+		$2314 \rightarrow 3 \qquad 1324 \rightarrow 3$\par
+		$2341 \rightarrow 3 \qquad 1342 \rightarrow 3$\par
+		$2413 \rightarrow 2 \qquad 1423 \rightarrow 2$\par
+		$2431 \rightarrow 2 \qquad 1432 \rightarrow 2$\par
+		$P(Y_4=1) = \frac{6}{24}$\par
+		$P(Y_4=2) = \frac{11}{24}$\par
+		$P(Y_4=3) = \frac{6}{24}$\par
+		$P(Y_n=4) = \frac{1}{24}$\par
+		$E(Y_n)=1\frac{6}{24} + 2\frac{11}{24} + 3\frac{6}{24} + 4\frac{1}{24}$\par
+		Р.грэхем\par
+		$x^{\bar{k}} = h_k(x)=x(x+1)(x+2)...(x+k-1)$\par
+		$x^{\bar{4}} = x(x+1)(x+2)(x+3) = 1x^4+6x^3+11x^2+6x$\par
+		$h_4(1)=4!=24$\par
+		$E(Y_n)=\sum_{k=1}^nk\frac{S_n^{(k)}}{n!}$\par
+
+		\item \textbf{\underline{Метод математических ожиданий}}\par
+		Т.В. Теорема\par
+		Если $Y=\sum_{i=1}^Mx_i$ и $E(x_i)$ - существует, то\par
+		$E(Y)=E(\sum x_i) = \sum (E(x_i))$\par
+		Из любого сходящегося ряда можно сделать распределение\par
+		$!\sum_{k=1}^\infty \frac{1}{k^2}=\zeta (z)=\frac{\pi^2}{6}$\par
+		$P(x=k)=\frac{6}{\pi^2}\frac{1}{k^2}$\par
+		$E(x)=\sum^{\infty}k\frac{6}{\pi^2}\frac{1}{k^2} = \frac{6}{\pi^2}\sum \frac{1}{k^2}$\par
+		$!x_j\rightarrow$ число переприсваиваний на $j$-ом шаге\par
+		$X_j=\left\{
+			\begin{array}{c}
+				0\\
+				1
+			\end{array}
+		\right.$\par
+		$Y_n=\sum_{j=1}^n x_j$\par
+		$j=1 = \left\{
+			\begin{array}{c}
+				x_1=0,\qquad P(.)=0\\
+				x_1=1,\qquad P()=1
+			\end{array}
+		\right.$\par
+
+		$E(x_k)=0(1-\frac{1}{k}) + 1\frac{1}{k_n}=\frac{1}{k}$\par
+		$E(Y_n)=\sum_{k=1}^n E(x_k)=\sum_{k=1}^n \frac{1}{k}=H_n \approx \ln n + \gamma$\par
+		$\bar{f}_{A_{max}} = 5n-4+2\ln n+2\gamma$
+	\end{enumerate}
 
 
 
