@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace Lab3
@@ -9,17 +11,12 @@ namespace Lab3
         public static void BubbleSort(Array arr)
         {
             int len = arr.N;
-            if (len == 0)
-            {
-                return;
-            }
-
             for (int indI = 0; indI + 1 < len; indI++)
             {
                 for (int indJ = 0; indJ + 1 < len - indI; indJ++)
                 {
                     if (arr[indJ + 1] < arr[indJ])
-                    {
+                    { 
                         int tmp = arr[indJ];
                         arr[indJ] = arr[indJ + 1];
                         arr[indJ + 1] = tmp;
@@ -28,48 +25,29 @@ namespace Lab3
             }
         }
 
-        public static void ShakerSort(Array arr)
+        public static void SelectionSort(Array arr)
         {
             int len = arr.N;
-            if (len == 0)
+            for (int i = 0; i < len - 1; i++)
             {
-                return;
-            }
-            int left = 0;
-            int right = len - 1;
-            while (left <= right)
-            {
-                for (int i = left; i < right; i++)
+                int select = i;
+                for (int j = i + 1; j < len; j++)
                 {
-                    if (arr[i] > arr[i + 1])
+                    if (arr[j] < arr[select])
                     {
-                        int tmp = arr[i];
-                        arr[i] = arr[i + 1];
-                        arr[i + 1] = tmp;
+                        select = j;
                     }
-                }
-                right--;
 
-                for (int i = right; i > left; i--)
-                {
-                    if (arr[i - 1] > arr[i])
-                    {
-                        int tmp = arr[i];
-                        arr[i] = arr[i - 1];
-                        arr[i - 1] = tmp;
-                    }
                 }
-                left++;
+                int tmp = arr[select];
+                arr[select] = arr[i];
+                arr[i] = tmp;
             }
         }
 
         public static void InsertionSort(Array arr)
         {
             int len = arr.N;
-            if (len == 0)
-            {
-                return;
-            }
             for (int i = 1; i < len; i++)
             {
                 int x = arr[i];
@@ -79,6 +57,54 @@ namespace Lab3
                     arr[j + 1] = arr[j];
                 }
                 arr[j + 1] = x;
+            }
+        }
+
+        public static void TestSort()
+        {
+            Stopwatch clock = new Stopwatch();
+            for (int i = 0; i <= 500; i += 100)
+            {
+                Array arr = new Array(i);
+                Array tmpArr = new Array(i);
+                arr.Fill();
+                
+                for (int _ = 0; _ < 3; _++)
+                {
+                    arr.Copy(tmpArr);
+                    
+                    // ------ Bubble Sort -------
+                    clock.Restart();
+                    BubbleSort(tmpArr);
+                    clock.Stop();
+                    var res = clock.ElapsedTicks;
+                    Console.WriteLine("Result bubble sort with " + Convert.ToString(i) + " is " + Convert.ToString(res));
+                    // --------------------------
+
+                    arr.Copy(tmpArr);
+
+                    // ----- Selection Sort -----
+                    clock.Restart();
+                    SelectionSort(tmpArr);
+                    clock.Stop();
+                    res = clock.ElapsedTicks;
+                    Console.WriteLine("Result selection sort with " + Convert.ToString(i) + " is " + Convert.ToString(res));
+                    // --------------------------
+
+                    arr.Copy(tmpArr);
+                    
+                    // ----- Insertion Sort -----
+                    clock.Restart();
+                    InsertionSort(tmpArr);
+                    clock.Stop();
+                    res = clock.ElapsedTicks;
+                    Console.WriteLine("Result selection sort with " + Convert.ToString(i) + " is " + Convert.ToString(res));
+                    // --------------------------
+                    Console.WriteLine();
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
             }
         }
     }
