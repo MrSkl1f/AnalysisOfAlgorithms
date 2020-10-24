@@ -181,7 +181,7 @@ namespace Lab4
                     endI = n1;
                 }
                 ParametersForSecond param = new ParametersForSecond(matr2, mulV, startI, endI, n2);
-                threads[i] = new Thread(ComputationLoopForMulH);
+                threads[i] = new Thread(ComputationLoopForMulV);
                 threads[i].Start(param);
                 startI = endI;
             }

@@ -169,7 +169,185 @@
 \clearpage
 \section{Технологический раздел}
 В данном разделе даны общие требования к программе, средства реализации и сама реализация алгоритмов.
-
+\subsection{Общие требования}
+\textbf{Требования к вводу:}
+\begin{enumerate}
+	\item[1)] вводятся размеры матриц;
+	\item[2)] вводятся (или автоматически генерируются) матрицы. 
+\end{enumerate}\par
+\textbf{Требования к программе}
+\begin{enumerate}
+	\item[1)] при вводе неправильных размеров матриц программа не должна завершиться аварийно;
+	\item[2)] должно выполняться корректное умножение матриц.
+\end{enumerate}
+\subsection{Средства реализации}
+В качестве языка программирования был выбран C\#,\hyperref[literature]{[3]} так как я знаком с данным языком программирования, имею представление о способах тестирования программы.\par
+Средой разработки Visual Studio.\hyperref[literature]{[4]}\par 
+Для замеров процессорного времени используется функция $Stopwatch$.\hyperref[literature]{[5]}\par
+Многопоточное программирование было реализовано с помощью пространства имен System.Threading.\hyperref[literature]{[6]}
+\subsection{Сведения о модулях программы}
+Программа состоит из:
+\begin{enumerate}
+	\item[1)] Program.cs - главный файл программы, в котором располагается точка входа в программу;
+	\item[2)] Matrix.cs - файл класса Matrix. Класс реализует матрицу размером $n * m$, а также он содержит методы для работы с матрицами;
+	\item[3)] Parameters.cs - файл классов ParametersForFirst и ParametersForSecond, которые используются для передачи данных функциям при распараллеливании циклов;
+	\item[4)] MultMatr.cs - файл класса MultMatr. В нем находится алгоритм Винограда;
+	\item[5)] ParallelMultMatr.cs - файл класса ParallelMultMatr, в котором находятся параллельныи реализации алгоритма Винограда.
+\end{enumerate}
+\subsection{Листинг кода программы}
+\begin{lstlisting}[label=MultMatrVin, caption=Стандартный алгоритм Винограда]
+	public static Matrix VinogradMult(Matrix matr1, Matrix matr2)
+	{
+		int n1 = matr1.N;
+		int n2 = matr2.N;
+		int m1 = matr1.M;
+		int m2 = matr2.M;
+		if ((m1 != n2) || n1 == 0 || n2 == 0)
+		{
+			return null;
+		}
+		
+		Matrix result = new Matrix(n1, m2);
+		int[] mulH = new int[n1];
+		int[] mulV = new int[m2];
+		
+		for (int i = 0; i < n1; i++)
+		{
+			for (int j = 0; j < m1 / 2; j++)
+			{
+				mulH[i] += matr1[i, j * 2] * matr1[i, j * 2 + 1];
+			}
+		}
+		
+		for (int i = 0; i < m2; i++)
+		{
+			for (int j = 0; j < n2 / 2; j++)
+			{
+				mulV[i] += matr2[j * 2, i] * matr2[j * 2 + 1, i];
+			}
+		}
+		
+		for (int i = 0; i < n1; i++)
+		{
+			for (int j = 0; j < m2; j++)
+			{
+				result[i, j] = -mulH[i] - mulV[j];
+				for (int k = 0; k < m1 / 2; k++)
+				{
+					result[i, j] += (matr1[i, 2 * k + 1] + matr2[2 * k, j]) * (matr1[i, 2 * k] + matr2[2 * k + 1, j]);
+				}
+			}
+		}
+		
+		if (m1 % 2 == 1)
+		{
+			for (int i = 0; i < n1; i++)
+			{
+				for (int j = 0; j < m2; j++)
+				{
+					result[i, j] += matr1[i, m1 - 1] * matr2[m1 - 1, j];
+				}
+			}
+		}
+		
+		return result;
+	}
+\end{lstlisting}
+\begin{lstlisting}[label=ParallelMulVin, caption=Параллельный алгоритм Винограда]
+	public static Matrix ParallelVinogradMult1(Matrix matr1, Matrix matr2, int countOfThreads)
+	{
+		int n1 = matr1.N;
+		int n2 = matr2.N;
+		int m1 = matr1.M;
+		int m2 = matr2.M;
+		if ((m1 != n2) || n1 == 0 || n2 == 0)
+		{
+			return null;
+		}
+		
+		Matrix result = new Matrix(n1, m2);
+		int[] mulH = new int[n1];
+		int[] mulV = new int[m2];
+		
+		for (int i = 0; i < n1; i++)
+		{
+			for (int j = 0; j < m1 / 2; j++)
+			{
+				mulH[i] += matr1[i, j * 2] * matr1[i, j * 2 + 1];
+			}
+		}
+		
+		for (int i = 0; i < m2; i++)
+		{
+			for (int j = 0; j < n2 / 2; j++)
+			{
+				mulV[i] += matr2[j * 2, i] * matr2[j * 2 + 1, i];
+			}
+		}
+		
+		Thread[] threads = new Thread[countOfThreads];
+		int distribution = n1 / countOfThreads;
+		int startI = 0;
+		for (int i = 0; i < countOfThreads; i++)
+		{
+			int endI = startI + distribution;
+			if (i == countOfThreads - 1)
+			{
+				endI = n1;
+			}
+			ParametersForFirst param = new ParametersForFirst(result, matr1, matr2, mulV, mulH, startI, endI, m2, m1);
+			threads[i] = new Thread(ComputationLoopForMain);
+			threads[i].Start(param);
+			startI = endI;
+		}
+		foreach (Thread curThread in threads)
+		{
+			curThread.Join();
+		}
+		
+		if (m1 % 2 == 1)
+		{
+			for (int i = 0; i < n1; i++)
+			{
+				for (int j = 0; j < m2; j++)
+				{
+					result[i, j] += matr1[i, m1 - 1] * matr2[m1 - 1, j];
+				}
+			}
+		}
+		
+		return result;
+	}
+\end{lstlisting}
+\begin{lstlisting}[label=loop, caption=Распараллеленный главный цикл]
+	private static void ComputationLoopForMain (object curObj)
+	{
+		ParametersForFirst param = (ParametersForFirst)curObj;
+		int startI  = param.startI, 
+			endI    = param.endI,
+			m2      = param.m2, 
+			m1      = param.m1;
+		Matrix res  = param.res,
+			matr1   = param.matr1,
+			matr2   = param.matr2;
+		int[] mulH  = param.mulH,
+			mulV    = param.mulV;
+		
+		for (int i = startI; i < endI; i++)
+		{
+			for (int j = 0; j < m2; j++)
+			{
+				res[i, j] = -mulH[i] - mulV[j];
+				for (int k = 0; k < m1 / 2; k++)
+				{
+					res[i, j] += (matr1[i, 2 * k + 1] + matr2[2 * k, j]) * (matr1[i, 2 * k] + matr2[2 * k + 1, j]);
+				}
+			}
+		}
+	}
+\end{lstlisting}
+\subsection{Вывод}
+В данном разделе были даны общие требования к программе, описаны средства реализации, были представлены сведения о модулях программы, а также реализованы алгоритмы умножения матриц (Винограда и параллельный Винограда).
 
 
 \clearpage
@@ -183,5 +361,6 @@
 	\item Документация по семейству продуктов Visual Studio. -URL:\par \href{https://docs.microsoft.com/ru-ru/visualstudio/?view=vs-2019}{https://docs.microsoft.com/ru-ru/visualstudio/?view=vs-2019 } (дата обращения: 01.10.2020). -Текст: электронный.
 	\item Stopwatch Класс. -URL: \href{https://goo.su/2e99}{https://goo.su/2e99 } (дата обращения: 24.10.2020). -Текст: электронный.
 	\item Под капотом у Stopwatch. -URL:  \href{https://habr.com/ru/post/226279/}{https://habr.com/ru/post/226279/} (дата обращения: 24.10.2020). Текст: электронный.
+	\item Thread Класс. -URL: \href{https://docs.microsoft.com/ru-ru/dotnet/api/system.threading.thread?view=netcore-3.1}{https://docs.microsoft.com/ru-ru/dotnet/api/system.threading.thread?view=netcore-3.1} (дата обращения 24.10.2020). -Текст: электронный.
 \end{enumerate}
 \end{document}\par
