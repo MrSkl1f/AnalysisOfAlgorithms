@@ -190,15 +190,6 @@ namespace Lab4
                 curThread.Join();
             }
 
-
-            for (int i = 0; i < m2; i++)
-            {
-                for (int j = 0; j < n2 / 2; j++)
-                {
-                    mulV[i] += matr2[j * 2, i] * matr2[j * 2 + 1, i];
-                }
-            }
-
             for (int i = 0; i < n1; i++)
             {
                 for (int j = 0; j < m2; j++)
