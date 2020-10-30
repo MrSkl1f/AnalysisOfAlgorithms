@@ -195,6 +195,7 @@
 	\item[5)] ParallelMultMatr.cs - файл класса ParallelMultMatr, в котором находятся параллельныи реализации алгоритма Винограда.
 \end{enumerate}
 \subsection{Листинг кода программы}
+В листинге 1 реализован стандартный алгоритм Винограда.
 \begin{lstlisting}[label=MultMatrVin, caption=Стандартный алгоритм Винограда]
 	public static Matrix VinogradMult(Matrix matr1, Matrix matr2)
 	{
@@ -253,6 +254,7 @@
 		return result;
 	}
 \end{lstlisting}
+В листинге 2 реализован параллельный алгоритм Винограда
 \begin{lstlisting}[label=ParallelMulVin, caption=Параллельный алгоритм Винограда]
 	public static Matrix ParallelVinogradMult1(Matrix matr1, Matrix matr2, int countOfThreads)
 	{
@@ -319,6 +321,7 @@
 		return result;
 	}
 \end{lstlisting}
+В листинге 3 реализован алгоритм Винограда с распараллеленым алгритмом Винограда
 \begin{lstlisting}[label=loop, caption=Распараллеленный главный цикл]
 	private static void ComputationLoopForMain (object curObj)
 	{
