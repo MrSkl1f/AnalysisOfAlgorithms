@@ -309,9 +309,95 @@
 	\end{enumerate}
 
 
+	\chapter*{Лекция 5}
+	\addcontentsline{toc}{chapter}{Лекция 5}
+	\section*{Сортировка вставками}
+	\addcontentsline{toc}{section}{Сортировка вставками}
+	\begin{enumerate}
+		\item \textbf{\underline{Идея}}\\
+		Ключ key и сдвигается до нужного
+		\item \textbf{\underline{Текст}}\\
+		$SortIns(A,n)$\par
+		$\qquad A[0] \leftarrow MinType$\par
+		$\qquad$ for $i \leftarrow 2$ to $n$\par
+		$\qquad\qquad $key$ \leftarrow A[i]$\par
+		$\qquad\qquad j \leftarrow i-1$\par
+		$\qquad\qquad$ while$(A[j] > k)$\par
+		$\qquad\qquad\qquad A[j+1] \leftarrow A[j]$\par
+		$\qquad\qquad\qquad j \leftarrow j-1$\par
+		$\qquad\qquad A[j+1] \leftarrow$ key\par
+		$\qquad$End\par
+		\item \textbf{\underline{Анализ $\bar{f_A}(n)$}} (класс NPR)\par
+		$f_A(D \in D_n) = f_n(n) + g_{Pr}(D) = f_n(n) + 8Y_n$\par
+		$Y_n$ - общее число проходов while\par
+		$f_n(n)=2+1+(n-1)(3+4+2+3) = 12n - 9$\par
+		$Y_n \in [0,?]$\par
+		\item \textbf{\underline{$\bar{f_A}(n)$}}\\
+		$\bar{f_A}(n) = E(f_A(D \in D_n)) = E(f_n(n) + 8Y_n) = f_n(n)+8E(Y_n)$\\
+		$?E(Y_n) = \sum_{k=0}^{?}kP(Y_n=k)$(не подходит)\\
+		\underline{Метод матожиданий} $\rightarrow Y_n = \sum_{2}^{n} X_i$, где $X_i$ - число проходов при $i = i_{for}$\\
+		$E(X_i) \rightarrow -\circ -\circ -\circ ... \circ - |_{0}^i$\\
+		($-\circ -\circ -\circ -\circ |_{0}^{i=4}$)\\
+		$X_i = (i-1)$\\
+		$X_i \in [0, i-1]$ $P(X_i = k)=\frac{1}{j}$\\
+		$\Rightarrow E(X_i)=\sum_{k=0}^{i-1}k\frac{1}{i} = \frac{1}{i}(0+1+2+...+(i-2)+(i-1))=\frac{i1}{2}$\\
+		$E(Y_n)=E(\sum X_i)=\sum_{2}^{n}(E(X_i))=\sum_{i=2}^{n}\frac{i-1}{2} = \frac{1}{2}\sum_{i=1}^{n}i - \frac{1}{2} -\frac{1}{2}(n-1)=\frac{n^2}{4}-\frac{n}{4}$\\
+		$\bar{f_A}(n)=12n-9+8(\frac{n^2}{4}-\frac{n}{4}) = 2n^2 + 10n - 9$
+	\end{enumerate}
 
-
-
+	\section*{Сортировка индексами}
+	\addcontentsline{toc}{section}{Сортировка индексами}
+	\begin{enumerate}
+		\item \textbf{\underline{Дано}}
+		\begin{enumerate}
+			\item $A \rightarrow a_i \in N$
+			\item $a_i \neq a_j, i \neq j$
+		\end{enumerate}
+		\item \textbf{\underline{Идея}}\\
+		$B[1..Max(a_i)]$\\
+		$A=[7,11,3,5], B=[0,0,1,-,1,-,1,-,-,-,1]$\\
+		$!B[A[i]]\leftarrow 1$\\
+		Используем элемент массива $A$ как элемент массива $B$\\
+		Цикл по $n$
+		\item \textbf{\underline{Сборка без if}}\\
+		$k \leftarrow 1$\par
+		for $j \leftarrow 1$ to $Max$\par
+		$\qquad A[k] \leftarrow j$\par
+		$\qquad k \leftarrow k + B[j]$\par
+		End\\
+		Сборка без if - отвратительная\\
+		\textbf{\underline{Модификации}}\\
+		Уберем (b) $\rightarrow \leftarrow 1 \Rightarrow +1$\\
+		(a) $N \rightarrow Z$
+		\item \textbf{\underline{Текст}}\\
+		$Sort(A, n, B, min, max)$\par
+		$\qquad L \leftarrow Max-Min+1$\par
+		$\qquad$for $j \leftarrow 1 to L$\par
+		$\qquad\qquad B[j] \leftarrow 0$\par
+		$\qquad$for $i \leftarrow 1$ to $n$\par
+		$\qquad\qquad k \leftarrow A[i] - Min + 1$\par
+		$\qquad\qquad B[k] \leftarrow B[k] + 1$\par
+		$\qquad k \leftarrow 1$\par
+		$\qquad$for $j \leftarrow 1$ to $L$\par
+		$\qquad\qquad$ If $B[j] \neq 0$\par
+		$\qquad\qquad\qquad$ then\par
+		$\qquad\qquad\qquad m \leftarrow B[j]$\par
+		$\qquad\qquad\qquad$for $s \leftarrow 1$ to $m$\par
+		$\qquad\qquad\qquad\qquad A[k] \leftarrow j + Min - 1$\par
+		$\qquad\qquad\qquad\qquad k \leftarrow k + 1$\par
+		$\qquad\qquad\qquad$ End\par
+		$\qquad$ End\par
+		End.\par
+		
+		\underline{Анализ при $m=1 \Rightarrow f^{\wedge}$}\\
+		$f_A(n, L) = 5L + 11n + 5L + n(3 + 3 + 6) + C = 10L + 23n + C$\par
+		
+		\item \textbf{\underline{Сравнение}}
+		$\bar{f_{A_1}}(n) = 2n^2 + 10n$\\
+		$f_{A_2}(n,L) = 10L + 23n$\\
+		$L = \frac{2n^2 - 13n}{10} = \frac{1}{5}n^2 - 1,3n$
+	\end{enumerate}
+	
 
 
 
