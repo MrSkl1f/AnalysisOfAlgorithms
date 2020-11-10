@@ -17,33 +17,29 @@ namespace Lab7
                     return(i);
                 }
             }
-            return result + 1;
+            return result;
         }
 
         public static int BinaryFind(string str, Dictionary dict)
         {
-            int result, left = 0, right = dict.N - 1;
-            while (true)
+            int left = 0;
+            int right = dict.N;
+            int mid = 0;
+
+            while (!(left >= right))
             {
-                if (left > right)
-                {
-                    return 0;
-                }
-                result = left + (right - left) / 2;
-                int need = String.Compare(str, dict[result]);
-                if (need < 0)
-                {
-                    right = result + 1;
-                }
-                if (need > 0)
-                {
-                    left = result - 1;
-                }
+                mid = left + (right - left) / 2;
+                int need = String.Compare(str, dict[mid]);
                 if (need == 0)
-                {
-                    return result;
-                }
+                    return mid;
+
+                if (need < 0)
+                    right = mid;
+                else
+                    left = mid + 1;
             }
+
+            return -(1 + left);
         }
 
         public static Word FindInSegment(string str, SegmentDictionary segDict)
@@ -61,9 +57,10 @@ namespace Lab7
                         }
                         i++;
                     }
+                    return new Word('0', -1);
                 }
             }
-            return new Word('0', 0);
+            return new Word('0', -1);
         }
     }
 }
