@@ -18,7 +18,7 @@ namespace Lab5
             Thread[] threads = new Thread[3];
             Line[] lines = new Line[3];
 
-            lines[2] = new Line(2, 2000, null);
+            lines[2] = new Line(2, 2000, null, true);
             lines[1] = new Line(1, 1000, lines[2]);
             lines[0] = new Line(0, 3000, lines[1], data);
 
@@ -30,6 +30,13 @@ namespace Lab5
             foreach (Thread thread in threads)
             {
                 thread.Join();
+            }
+
+            List<Arguments> result = lines[2].GetArguments();
+            foreach (Arguments arg in result)
+            {
+                Console.Write(arg.id);
+                Console.Write(" ");
             }
         }
 

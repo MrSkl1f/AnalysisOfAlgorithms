@@ -12,13 +12,23 @@ namespace Lab5
         int timeToSleep;
         Queue<Arguments> myQueue;
         Line next;
-
-        public Line(int lineID, int timeToSleep, Line nextLine)
+        bool isLast;
+        List<Arguments> result;
+        public Line(int lineID, int timeToSleep, Line nextLine, bool isLast = false)
         {
             this.lineID = lineID;
             this.timeToSleep = timeToSleep;
             next = nextLine;
             myQueue = new Queue<Arguments>();
+            this.isLast = isLast;
+            InitResult();
+        }
+        private void InitResult()
+        {
+            if (isLast)
+            {
+                result = new List<Arguments>();
+            }
         }
         public Line(int lineID, int timeToSleep, Line nextLine, List<Arguments> elements)
         {
@@ -26,6 +36,7 @@ namespace Lab5
             this.timeToSleep = timeToSleep;
             next = nextLine;
             myQueue = new Queue<Arguments>(elements);
+            this.isLast = false;
         }
         public void RunLine()
         {
@@ -43,16 +54,16 @@ namespace Lab5
             {
                 if (element.IsLast())
                 {
-                    if (next != null)
-                    {
-                        next.PushElem(element);
-                    }
-                    return condition.finish;
+                    return FinishLine(element);
                 }
                 Action(element);
                 if (next != null)
                 {
                     next.PushElem(element);
+                }
+                else if (isLast)
+                {
+                    result.Add(element);
                 }
             }
             else
@@ -66,6 +77,14 @@ namespace Lab5
             Console.WriteLine("On line " + (lineID + 1).ToString() + " element " + arg.id.ToString() + " starts at " + DateTime.Now.Second.ToString());
             Thread.Sleep(timeToSleep);
             Console.WriteLine("On line " + (lineID + 1).ToString() + " element " + arg.id.ToString() + " ends at " + DateTime.Now.Second.ToString());
+        }
+        private condition FinishLine(Arguments arg)
+        {
+            if (next != null)
+            {
+                next.PushElem(arg);
+            }
+            return condition.finish;
         }
         private void PopElem(ref Arguments arg)
         {
@@ -83,6 +102,11 @@ namespace Lab5
             {
                 myQueue.Enqueue(arg);
             }
+        }
+
+        public List<Arguments> GetArguments()
+        {
+            return result;
         }
     }
 }
