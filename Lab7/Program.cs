@@ -61,18 +61,18 @@ namespace Lab7
             clock.Stop();
             long tmp = clock.ElapsedTicks;
             List<string> line = new List<string>();
-            for (int i = 0; i < dict.N; i++)
+            for (int i = 0; i < dict.N; i += 25)
             {
                 string str = dict[i];
                 long time = 0;
-                for (int j = 0; j < 1000; j++)
+                for (int j = 0; j < 10000; j++)
                 {
                     clock.Restart();
                     int res = Search.BruteForce(str, dict);
                     clock.Stop();
                     time += clock.ElapsedTicks;
                 }
-                time /= 1000;
+                time /= 10000;
                 line.Add((i + 1).ToString() + " " + time.ToString());
                 Console.WriteLine(i.ToString() + str);
             }
@@ -90,18 +90,18 @@ namespace Lab7
             clock.Stop();
             long tmp = clock.ElapsedTicks;
             List<string> line = new List<string>();
-            for (int i = 0; i < dict.N; i++)
+            for (int i = 0; i < dict.N; i += 25)
             {
                 string str = dict[i];
                 long time = 0;
-                for (int j = 0; j < 1000; j++)
+                for (int j = 0; j < 10000; j++)
                 {
                     clock.Restart();
                     int res = Search.BinaryFind(str, dict);
                     clock.Stop();
                     time += clock.ElapsedTicks;
                 }
-                time /= 1000;
+                time /= 10000;
                 line.Add((i + 1).ToString() + " " + time.ToString());
                 Console.WriteLine(i.ToString() + str);
             }
@@ -123,12 +123,12 @@ namespace Lab7
 
 
             List<string> line = new List<string>();
-            for (int i = 0; i < dict.N; i++)
+            for (int i = 0; i < dict.N; i += 25)
             {
                 string str = dict[i];
                 long time = 0;
                 Word res = new Word('a', 0);
-                for (int j = 0; j < 1000; j++)
+                for (int j = 0; j < 10000; j++)
                 {
                     clock.Restart();
                     res = Search.FindInSegment(str, segDict);
