@@ -19,7 +19,7 @@ namespace Lab5
             Line[] lines = new Line[3];
 
             lines[2] = new Line(2, 2000, null);
-            lines[1] = new Line(1, 2000, lines[2]);
+            lines[1] = new Line(1, 1000, lines[2]);
             lines[0] = new Line(0, 3000, lines[1], data);
 
             for (int i = 0; i < 3; i++)
@@ -37,9 +37,9 @@ namespace Lab5
         {
             for (int i = 0; i < size; i++)
             {
-                data.Add(new Arguments(countOfLines, i));
+                data.Add(new Arguments(i));
             }
-            data.Add(new Arguments(0, -1, true));
+            data.Add(new Arguments(-1, true));
         }
     }
 }

@@ -33,10 +33,6 @@ namespace Lab5
             while (result != condition.finish)
             {
                 result = ProcessElem();
-                if (result == condition.empty)
-                {
-                    Thread.Sleep(300);
-                }
             }
         }
         private condition ProcessElem()
@@ -67,11 +63,9 @@ namespace Lab5
         }
         private void Action(Arguments arg)
         {
-            arg.start[lineID] = DateTime.Now.Second;
-            Console.WriteLine((lineID + 1).ToString() + " start " + arg.id.ToString() + " " + arg.start[lineID].ToString());
+            Console.WriteLine("On line " + (lineID + 1).ToString() + " element " + arg.id.ToString() + " starts at " + DateTime.Now.Second.ToString());
             Thread.Sleep(timeToSleep);
-            arg.end[lineID] = DateTime.Now.Second;
-            Console.WriteLine((lineID + 1).ToString() + " end " + arg.id.ToString() + " " + arg.start[lineID].ToString());
+            Console.WriteLine("On line " + (lineID + 1).ToString() + " element " + arg.id.ToString() + " ends at " + DateTime.Now.Second.ToString());
         }
         private void PopElem(ref Arguments arg)
         {
