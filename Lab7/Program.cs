@@ -61,7 +61,7 @@ namespace Lab7
             clock.Stop();
             long tmp = clock.ElapsedTicks;
             List<string> line = new List<string>();
-            for (int i = 0; i < dict.N; i += 25)
+            for (int i = 0; i < dict.N; i += 50)
             {
                 string str = dict[i];
                 long time = 0;
@@ -90,7 +90,7 @@ namespace Lab7
             clock.Stop();
             long tmp = clock.ElapsedTicks;
             List<string> line = new List<string>();
-            for (int i = 0; i < dict.N; i += 25)
+            for (int i = 0; i < dict.N; i += 50)
             {
                 string str = dict[i];
                 long time = 0;
@@ -123,7 +123,7 @@ namespace Lab7
 
 
             List<string> line = new List<string>();
-            for (int i = 0; i < dict.N; i += 25)
+            for (int i = 0; i < dict.N; i += 50)
             {
                 string str = dict[i];
                 long time = 0;

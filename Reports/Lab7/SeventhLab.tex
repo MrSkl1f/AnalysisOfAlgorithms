@@ -118,7 +118,7 @@
 	\item[2)] описать алгоритм двоичного поиска;
 	\item[3)] описать алгоритм поиска слов по сегментам;
 	\item[4)] реализовать 3 алгоритма поиска по словарю;
-	\item[5)] провести замеры времени работы алгоритмов: $t_{max}, t_{min}, t_{mid}, t_{\not{\exists}}$
+	\item[5)] провести замеры времени работы алгоритмов.
 \end{enumerate}\par
 
 % АНАЛИТИЧЕСКИЙ РАЗДЕЛ
@@ -271,7 +271,7 @@ public static Word FindInSegment(string str, SegmentDictionary segDict)
 \section{Экспериментальный раздел}
 В данном разделе представлены результаты работы программы и приведен анализ времени работы алгоритмов.
 \subsection{Описание экспериментов}
-Производится замер времени для $n + 1$ возможных случаев, где $n$ - длина словаря. Также считается время $t_{max},t_{min},t_{mid},t_{\not{\exists}}$
+Производится замер времени для $n + 1$ возможных случаев, где $n$ - длина словаря. 
 \subsection{Примеры работы программы}
 На \hyperref[Example1]{рисунке 4} представлен результат работы алгоритмов.
 \begin{figure}[h!]
@@ -280,6 +280,7 @@ public static Word FindInSegment(string str, SegmentDictionary segDict)
 	\caption{Первый результат работы программы}
 	\label{Example1}
 \end{figure}\par
+На \hyperref[Test1]{рисунке 5} представлены результаты сравнения трех алгоритмов поиска.
 \begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}[object/.style={thin,double,<->}]
@@ -287,24 +288,30 @@ public static Word FindInSegment(string str, SegmentDictionary segDict)
 		\begin{axis}[
 			axis lines = left,
 			xlabel = $\textit{количество потоков в параллельных реализациях}$,
-			ylabel = {$\textit{время выполнения, тики}$},
-			legend pos=north east,
+			ylabel = {$\textit{индекс слова в словаре}$},
+			legend pos=north west,
 			ymajorgrids=true
 			]
 			\addplot[color=red] table[x index=0, y index=1] {source/BruteForce.dat}; 
 			\addplot[color=orange] table[x index=0, y index=1] {source/BinaryFind.dat};
 			\addplot[color=blue, mark=square] table[x index=0, y index=1] {source/FindInSegment.dat};
 			
-			\addlegendentry{Линейная реализация}
-			\addlegendentry{Параллельная реализация 1}
-			\addlegendentry{Параллельная реализация 2}
+			\addlegendentry{Полный перебор}
+			\addlegendentry{Бинарный поиск}
+			\addlegendentry{Поиск по сегментам}
 			
 		\end{axis}
 	\end{tikzpicture}
 	
-	\caption{Результаты замеров процессорного времени в первом эксперименте.}
+	\caption{Результаты замеров процессорного времени.}
 	\label{Test1}
-\end{figure}
+\end{figure}\par
+\newpage
+\subsection{Вывод}
+Результаты тестирования показывают, что самым эффективным и "стабильным" является бинарный поиск. Самым долгим является алгоритм полного перебора. Его время возрастает каждый раз из-за того, что слова находятся дальше в словаре, а каждый поиск начинается с самого начала. По графику алгоритма поиска по сегментам можно увидеть резкие скачки. Это происходит из-за того, что слово в находится в конце сегмента. Можно сделать вывод, что самым эффективным является алгоритм бинарного поиска.
+\clearpage
+\section{Вывод}
+В ходе выполнения данной лабораторной работы были изучены три алгоритмы поиска по словарю. Были описаны все алгоритмы и реализованы. Также были изучены способы хранения слов, то есть в случаях первого и второго алгоритмов слова хранились в массивах, а в третьем хранилось по сегментам. Сравнили время работы алгоритмов, в результате которого стало понятно, что самым эффективным алгоритм был бинарный поиск.
 \clearpage
 \section*{Литература}
 \addcontentsline{toc}{section}{Литература}
