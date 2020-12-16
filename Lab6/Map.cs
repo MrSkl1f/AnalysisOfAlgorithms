@@ -6,61 +6,45 @@ namespace Lab6
 {
     class Map
     {
-        public int count;
-        public int[,] dist;
-        public Point[] pos;
+        private int count;
+        private int[,] dist;
 
-        public Map(int n, int size)
+        public Map(int n, int rand)
         {
+            Random r = new Random();
             count = n;
-            InitPos(size);
-            InitDist();
-        }
-
-        private void InitDist()
-        {
             dist = new int[count, count];
             for (int i = 0; i < count; i++)
             {
                 dist[i, i] = -1;
                 for (int j = i + 1; j < count; j++)
                 {
-                    dist[i, j] = dist[j, i] = GetDistance(pos[i], pos[j]);
+                    dist[i, j] = dist[j, i] = r.Next(rand);
                 }
             }
         }
 
-        private void InitPos(int size)
+        public int this[int i, int j]
         {
-            Random rand = new Random();
-            pos = new Point[count];
+            get { return dist[i, j]; }
+            set { dist[i, j] = value; }
+        }
+        public int N
+        {
+            get { return count; }
+            set { count = value; }
+        }
+        public void Print()
+        {
             for (int i = 0; i < count; i++)
             {
-                pos[i] = new Point(rand.Next(size), rand.Next(size));
+                for (int j = 0; j < count; j++)
+                {
+                    Console.Write(dist[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
             }
-        }
-        
-        private int GetDistance(Point a, Point b)
-        {
-            return (int)Math.Ceiling(Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y)));
-        }
-    }
-
-    class Point
-    {
-        private int x, y;
-        public Point(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-        public int X
-        {
-            get { return x; }
-        }
-        public int Y
-        {
-            get { return y; }
         }
     }
 }

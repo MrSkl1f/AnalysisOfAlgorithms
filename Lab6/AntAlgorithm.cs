@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lab6
 {
-    abstract class Algorithm
+    class AntAlgorithm
     {
 
     }

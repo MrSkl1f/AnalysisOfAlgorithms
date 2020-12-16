@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Lab6
 {
@@ -6,7 +7,11 @@ namespace Lab6
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Map map = new Map(4, 50);
+            Route res = BruteForce.GetRoute(map);
+            res.Print();
+            map.Print();
+            
         }
     }
 }
