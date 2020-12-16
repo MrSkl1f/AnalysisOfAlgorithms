@@ -8,10 +8,10 @@ namespace Lab6
         static void Main(string[] args)
         {
             Map map = new Map(4, 50);
-            Route res = BruteForce.GetRoute(map);
+            Path res = BruteForce.GetRoute(map);
             res.Print();
+            Console.WriteLine();
             map.Print();
-            
         }
     }
 }
