@@ -25,12 +25,15 @@ namespace Lab6
             GetDistance();
         }
 
-        public void AddTown(Map map, int town)
+        public void AddTown(int town)
         {
             dist += map[path[path.Count - 1], town];
             path.Add(town);
         }
-
+        public int LastTown()
+        {
+            return path[path.Count - 1];
+        }
         public bool CheckTown(int town)
         {
             foreach (int num in path)

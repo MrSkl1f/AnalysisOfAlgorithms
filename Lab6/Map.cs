@@ -19,7 +19,12 @@ namespace Lab6
                 dist[i, i] = -1;
                 for (int j = i + 1; j < count; j++)
                 {
-                    dist[i, j] = dist[j, i] = r.Next(rand);
+                    int tmp = 0;
+                    while (tmp == 0)
+                    {
+                        tmp = r.Next(rand);
+                    }
+                    dist[i, j] = dist[j, i] = tmp;
                 }
             }
         }
@@ -33,6 +38,14 @@ namespace Lab6
         {
             get { return count; }
             set { count = value; }
+        }
+        public int Sum()
+        {
+            int sum = 0;
+            for (int i = 0; i < count; i++)
+                for (int j = 0; j < count; j++)
+                    sum += dist[i, j];
+            return sum;
         }
         public void Print()
         {
