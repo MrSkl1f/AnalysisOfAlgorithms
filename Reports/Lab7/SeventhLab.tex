@@ -137,8 +137,9 @@
 Целочисленный двоичный поиск (бинарный поиск) (англ. binary search) — алгоритм поиска объекта по заданному признаку в множестве объектов, упорядоченных по тому же самому признаку, работающий за логарифмическое время.\par
 Двоичный поиск заключается в том, что на каждом шаге множество объектов делится на две части и в работе остаётся та часть множества, где находится искомый объект. Или же, в зависимости от постановки задачи, мы можем остановить процесс, когда мы получим первый или же последний индекс вхождения элемента. Последнее условие — это левосторонний/правосторонний двоичный поиск. 
 \subsection{Алгоритм поиска по сегментам}
-Суть данного алгоритма заключается в том, что необходимо разбить словарь на сегменты. Каждый сегмент определяет первую букву слов, которые находятся в нем. Дя того, чтобы найти в словаре нужно сначала проходить по сегментам, когда найден нужный - искать слово в нем.
-
+Суть данного алгоритма заключается в том, что необходимо разбить словарь на сегменты. Каждый сегмент определяет первую букву слов, которые находятся в нем. Для того, чтобы найти в словаре нужно сначала проходить по сегментам, когда найден нужный - искать слово в нем.
+\subsection{Вывод}
+В данном разделе были описаны алгоритмы поиска по словарю.
 \clearpage
 \section{Конструкторский раздел}
 В данном разделе представлены схемы разработанных алгоритмов.
@@ -199,7 +200,7 @@
 \end{enumerate}
 \subsection{Листинг кода программы}
 В листинге 1 реализован алгоритм полного перебора слов.
-\begin{lstlisting}[label=MultMatrVin, caption=Алгоритм полного перебора слов]
+\begin{lstlisting}[label=brute, caption=Алгоритм полного перебора слов]
 public static int BruteForce(string str, Dictionary dict)
 {
 	int result = -1;
@@ -213,8 +214,8 @@ public static int BruteForce(string str, Dictionary dict)
 	return result + 1;
 }	
 \end{lstlisting}
-В листинге 2 реализован алгоритм двоичного поиска
-\begin{lstlisting}[label=MultMatrVin, caption=Алгоритм двоичного поиска]
+В листинге 2 реализован алгоритм двоичного поиска.
+\begin{lstlisting}[label=binary, caption=Алгоритм двоичного поиска]
 public static int BinaryFind(string str, Dictionary dict)
 {
 	int result, left = 0, right = dict.N - 1;
@@ -241,8 +242,8 @@ public static int BinaryFind(string str, Dictionary dict)
 	}
 }
 \end{lstlisting}
-В листинге 3 реализован алгоритм поиска по сегментам
-\begin{lstlisting}[label=MultMatrVin, caption=Алгоритм двоичного поиска]
+В листинге 3 реализован алгоритм поиска по сегментам.
+\begin{lstlisting}[label=segment, caption=Алгоритм поиска по сегментам]
 public static Word FindInSegment(string str, SegmentDictionary segDict)
 {
 	foreach (Segment curSegment in segDict.segments)
@@ -287,8 +288,8 @@ public static Word FindInSegment(string str, SegmentDictionary segDict)
 		
 		\begin{axis}[
 			axis lines = left,
-			xlabel = $\textit{количество потоков в параллельных реализациях}$,
-			ylabel = {$\textit{индекс слова в словаре}$},
+			xlabel = $\textit{индекс слова в словаре}$,
+			ylabel = {$\textit{время (тики)}$},
 			legend pos=north west,
 			ymajorgrids=true
 			]
